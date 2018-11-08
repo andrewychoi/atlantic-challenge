@@ -1,21 +1,32 @@
-Installation:
+# Installation:
 
-Build a virtualenv:
+## Build a virtualenv:
 
 > mkdir venv
 > virtualenv -p python3 venv
 > source venv/bin/activate
 
-Install packages:
+## Install packages:
 > pip install pip-tools
 > pip-sync requirements.txt
 
-Run migrations:
+## Run migrations:
 > cd atlantic
 > python manage.py migrate
 
-Start server:
+## Start server:
 > python manage.py runserver
+
+## Examine:
+In browser, go to localhost:8000
+For inserted items, check localhost:8000/admin/
+
+# Credentials:
+Existing database has a superuser: username:password == andrew:andrew
+To create new ones:
+> python manage.py createsuperuser
+
+# For maintenance
 
 Update packages:
 > pip-compile requirements.in
