@@ -42,7 +42,7 @@ The templates are currently uglier than sin, but the functionality is there!
 From spec:
 
 - [✓] A full git history showing your development style.
-	- included in tarball
+	- you're reading this in a git repo!
 - [✓] Normalization of the database
 	- check out `atlantic/orders/models.py`
 - [✓ ish] Authentication and authorization capabilities
