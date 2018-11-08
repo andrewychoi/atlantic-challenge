@@ -29,10 +29,17 @@ class Customer(models.Model):
     state = models.TextField()
     zipcode = models.TextField()
 
+    def __str__(self):
+        return "[{}] {} {}".format(self.customer_id, self.first_name, self.last_name)
+
 
 class Product(models.Model):
     product_id = models.IntegerField()
     name = models.TextField(max_length=100)
+
+    def __str__(self):
+        return "[{}] {}".format(self.product_id, self.name)
+
 
 
 class Purchase(models.Model):
@@ -56,3 +63,6 @@ class Purchase(models.Model):
     status = models.TextField()
     amount = models.DecimalField(max_digits=15 + 2, decimal_places=2)
     datetime = models.DateTimeField()
+
+    def __str__(self):
+        return "{} - {}: {} for {} on {}".format(self.customer, self.product, self.status, self.amount, self.datetime)
