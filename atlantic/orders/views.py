@@ -20,7 +20,7 @@ def home(request):
 
 
 def handle_uploaded_file(uploaded_file):
-    # UNSAFE! NEED TO VERIFY THIS!
+    # UNSAFE! NEED TO VERIFY CHARACTER ENCODING!
     encoding = uploaded_file.charset if uploaded_file.charset else "utf-8"
     for line_bytes in uploaded_file:
         line = line_bytes.decode(encoding)
@@ -45,6 +45,9 @@ def handle_uploaded_file(uploaded_file):
         amount = Decimal(amount)
         datetime = parse_datetime(datetime)
 
+        # update logic for customer addresses would need to go here
+        # try to get customer on basis of ID or name, and update otherwise
+        # currently we throw away an update to name or address
         customer, created = Customer.objects.get_or_create(
             customer_id=customer_id,
             defaults={
@@ -60,6 +63,20 @@ def handle_uploaded_file(uploaded_file):
             defaults={
                 "name": product_name,
             })
+
+        # validation for purchase should go here:
+        # untested, but something like:
+        """
+        if status == "canceled":
+            latest_purchase = Purchase.objects.filter(
+                amount=amount, customer=customer, product=product
+                ).latest("datetime")
+            if not latest_purchase.exists():
+                raise ValueError("No purchase to cancel")
+            if latest_purchase.status == "canceled"
+                raise ValueError("Purchase already canceled")
+
+        """
         purchase, created = Purchase.objects.get_or_create(
             status=status,
             amount=amount,
